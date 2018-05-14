@@ -35,6 +35,7 @@ class  Two {
 			@Override
 			public void Xp() {
 				System.out.println("我是匿名内部类");
+				System.out.println("我是追加的代码");
 			}
 		};
 		
