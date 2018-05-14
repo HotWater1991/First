@@ -26,6 +26,7 @@
 }
   //文件内部的类
 class  Two {
+	private  String  secondAdd;//第二次追加代码
 	
 	public   void XX() {
 		
