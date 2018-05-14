@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+<!-- 配置MyBatis环境即DAO层 
+1. 数据源
+2.让spring管理MyBatis的sqlsessionfactorybean对象
+-->			
+<bean id="datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+<property name="url" value="jdbc:mysql///ssm_maven"></property>
+<property name="user" value="root"></property>
+<property name="password" value="root"></property>
+</bean>    
+<!-- 配置spring管理MyBatis的替代bean -->
+<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+<property name="dataSource" ref="datasource"></property>
+<property name="typeAliasesPackage" value="com.zzu.web.domain"></property>
+</bean>			
+<bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+<property name="basePackage" ref="com.zzu.dao"></property>
+</bean>
+ <!-- dao层配置结束 -->   
+ 
+ <!-- service层配置开始 -->
+ <!-- 配置扫描组装bean -->
+ <context:component-scan base-package="com.zzu.service"></context:component-scan>
+ 
+ <!-- 配置事务 -->
+ <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+ <property name="dataSource" ref="datasource"></property>
+ </bean>
+<!-- 配置通知 --> 
+ 
+ 
+</beans>
